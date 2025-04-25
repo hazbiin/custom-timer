@@ -205,12 +205,14 @@ timerBtn.addEventListener("click", () => {
 function addEventListnersToNewTimerBtns() {
 
     const newTimerBtns = document.querySelectorAll(".new-timer-btn");
-
-    // let istimerActive = false;
+    let istimerActive = false;
 
     newTimerBtns.forEach((newTimerBtn) => {
         newTimerBtn.addEventListener("click", () => {
             
+            istimerActive = true
+            
+
             if(timerState !== "started") {
 
                 newTimerBtnId = newTimerBtn.dataset.timerId;
@@ -225,32 +227,35 @@ function addEventListnersToNewTimerBtns() {
                     minutes = Number(m);
                     hours = Number(h);
                 }
-
-                
                 timerName.textContent = `Timer ${newTimerBtnId}`;
                 timerBtnText.textContent = "Resume";
 
 
+                // const allTotalTimeContainer = document.querySelectorAll(".timer-total");
+                // allTotalTimeContainer.forEach(totalTimeContainer => {
+                //     console.log(totalTimeContainer.textContent)
+                //     if(totalTimeContainer.textContent !== "-- -- --") {
+                //         console.log("herere")
+                //         totalTimeContainer.textContent = "-- -- --";
+                //     }else {
+                //         totalTimeContainer.textContent = totalTimeContainer.textContent 
+                //     }
+                // })
+                
+                // j
+                
+
+                
                 totalTimeContainer.textContent = "-- -- --";
                 
-
-                const allTotalTimeContainer = document.querySelectorAll(".timer-total");
-                console.log(allTotalTimeContainer)
-                
-                allTotalTimeContainer.forEach(totalTimeContainer => {
-
-
-
-                })
-
                 // if(!istimerActive) {
                 //     totalTimeContainer.textContent = "-- -- --";
                 // }
-
                 // istimerActive = true;
             }   
         })
-
+        
+        
         // console.log(istimerActive);
         // istimerActive = false;
     })
@@ -268,41 +273,3 @@ function convertSecondsToTimeFormat(totalSeconds){
     return `${formatWithLeadingZero(hrs)}:${formatWithLeadingZero(mins)}:${formatWithLeadingZero(secs)}`;
 }
 
-
-
-
-// final object iam gonna make
-// timell = [
-    //     {
-    //         id,
-    //         timerName: timer1,
-    //         timelogs : [
-    //             {
-    //                 id,
-    //                 startTime,
-    //                 endTime,
-    //                 totalTime
-    //             }
-    //         ],
-    //         totalTime: "add all"
-    //     },
-    //     {
-    //         id,
-    //         timerName: timer2,
-    //         timeLogs : [
-    //             {
-    //                 id,
-    //                 startTime,
-    //                 endTime,
-    //                 totalTime
-    //             },
-    //             {
-    //                 id,
-    //                 startTime,
-    //                 endTime,
-    //                 totalTime
-    //             }
-    //         ],
-    //         totalTime: "add all"
-    //     }
-    // ]
