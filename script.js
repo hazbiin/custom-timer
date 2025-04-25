@@ -9,8 +9,7 @@ const timerName = document.querySelector(".timer-name");
 const timeLogList = document.querySelector(".time-log-list");
 
 const timers = JSON.parse(localStorage.getItem("timers")) || [];
-console.log(timers);
-
+console.log(timers); 
 
 // initial loading from localstorage
 displayInitialLogs();
@@ -36,6 +35,7 @@ function displayInitialLogs() {
     })
 }
 
+
 let seconds = 0;
 let minutes = 0;
 let hours = 0;
@@ -47,10 +47,9 @@ let endTime = null;
 let totalTime = null;
 
 let newTimerBtnId = null;
-
 let timerCount = 0;
-timerBtn.addEventListener("click", () => {
 
+timerBtn.addEventListener("click", () => {
     if(timerState === "stopped") {
 
         //getting start time
@@ -68,9 +67,6 @@ timerBtn.addEventListener("click", () => {
         }else {
             timerCount++;
         }
-
-
-        // console.log(seconds, hours, minutes);
 
         // running timer
         intervalId = setInterval(() => {
@@ -110,6 +106,8 @@ timerBtn.addEventListener("click", () => {
                     </div>
             `;
             timeLogList.appendChild(li);
+            const timeLogContainer = document.querySelector('.timer-list-section .section-bottom ');
+            timeLogContainer.scrollTop = timeLogContainer.scrollHeight;
         }
     }else {
 
@@ -122,7 +120,7 @@ timerBtn.addEventListener("click", () => {
         // getting total time
         const timeDiffInSeconds = Math.floor((endTime - startTime) / 1000);
         totalTime = convertSecondsToTimeFormat(timeDiffInSeconds);
-        
+
 
         // updating before storing to localstorage
         if(timers.length === 0 || newTimerBtnId === null) {
@@ -178,6 +176,7 @@ timerBtn.addEventListener("click", () => {
                             totalTimeContainer.textContent = timer.timerTotalTime;
                         }
                     })
+                    
                 }
             })
         }
@@ -185,7 +184,7 @@ timerBtn.addEventListener("click", () => {
         // storing to local storage.
         localStorage.setItem("timers", JSON.stringify(timers));
 
-        // making necessary changes
+        // making necessary changes.
         timerState = "stopped";
         timerBtnText.textContent = "Start";
         timerBtnIcon.setAttribute("d", "M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z");
@@ -201,20 +200,13 @@ timerBtn.addEventListener("click", () => {
 })
 
 
-
 function addEventListnersToNewTimerBtns() {
-
     const newTimerBtns = document.querySelectorAll(".new-timer-btn");
-    let istimerActive = false;
-
-    newTimerBtns.forEach((newTimerBtn) => {
+    newTimerBtns.forEach(newTimerBtn => {
         newTimerBtn.addEventListener("click", () => {
-            
-            istimerActive = true
-            
-
             if(timerState !== "started") {
 
+                // storing the id of the clicked btn
                 newTimerBtnId = newTimerBtn.dataset.timerId;
 
                 const totalTimeContainer = newTimerBtn.closest(".list-item-container").querySelector(".timer-total");
@@ -222,45 +214,39 @@ function addEventListnersToNewTimerBtns() {
 
                 if(newTime !== "-- -- --") {
                     timer.textContent = newTime;
+
                     let [h, m, s] = newTime.split(":");
                     seconds = Number(s);
                     minutes = Number(m);
                     hours = Number(h);
                 }
+
                 timerName.textContent = `Timer ${newTimerBtnId}`;
                 timerBtnText.textContent = "Resume";
 
 
-                // const allTotalTimeContainer = document.querySelectorAll(".timer-total");
-                // allTotalTimeContainer.forEach(totalTimeContainer => {
-                //     console.log(totalTimeContainer.textContent)
-                //     if(totalTimeContainer.textContent !== "-- -- --") {
-                //         console.log("herere")
-                //         totalTimeContainer.textContent = "-- -- --";
-                //     }else {
-                //         totalTimeContainer.textContent = totalTimeContainer.textContent 
-                //     }
-                // })
-                
-                // j
-                
+                // resetting all timer's total time.
+                const allListItems = document.querySelectorAll(".list-item-container");
+                allListItems.forEach(item => {
+                    const btn = item.querySelector(".new-timer-btn");
+                    const totalContainer = item.querySelector(".timer-total");
+                    const id = btn.dataset.timerId;
 
-                
-                totalTimeContainer.textContent = "-- -- --";
-                
-                // if(!istimerActive) {
-                //     totalTimeContainer.textContent = "-- -- --";
-                // }
-                // istimerActive = true;
-            }   
+                    if(id === newTimerBtnId) {
+                        totalContainer.textContent = "-- -- --";
+                    }else {
+
+                        // finding the totaltime of each timer form localstorage and store that value for remaining totals
+                        const timerMatched = timers.find(t => t.timerId === Number(id));
+                        if(timerMatched) {
+                            totalContainer.textContent = timerMatched.timerTotalTime;
+                        }
+                    }
+                })
+            }
         })
-        
-        
-        // console.log(istimerActive);
-        // istimerActive = false;
     })
 }
-
 
 function formatWithLeadingZero(val){
     return val < 10 ? `0${val}` : val
@@ -272,4 +258,3 @@ function convertSecondsToTimeFormat(totalSeconds){
 
     return `${formatWithLeadingZero(hrs)}:${formatWithLeadingZero(mins)}:${formatWithLeadingZero(secs)}`;
 }
-
