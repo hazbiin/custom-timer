@@ -145,7 +145,8 @@ body {
 }
 
 .timer-name{
-  height: 24px;
+  height: 20.8px;
+  font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -180,8 +181,11 @@ body {
     padding-bottom: 50px;
   }
 
+  .timer-name{
+    height: unset;
+    font-size: 18px;
+  }
   
-
   .timer-section {
     flex: 1;
     width: 10%;
