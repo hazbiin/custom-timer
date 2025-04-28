@@ -31,14 +31,23 @@ body {
     flex: 1;
     box-shadow:  0px 0px 1px rgba(64,87,109,.04),0px 6px 20px -4px rgba(64,87,109,.3);
     color:#3b4146;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
-.timer-list-section::-webkit-scrollbar{
-  display: none;
-}
 .timer-list-section .section-bottom {
   padding: 10px;
+  padding-bottom: 55px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.timer-list-section .section-bottom::-webkit-scrollbar{
+  display: none;
+}
+
+.time-log-container{
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .time-log-list {
@@ -135,6 +144,10 @@ body {
   fill: #fff;
 }
 
+.timer-name{
+  height: 24px;
+}
+
 @media (min-width: 768px) {
   body {
     padding: 50px;
@@ -167,9 +180,7 @@ body {
     padding-bottom: 50px;
   }
 
-  .timer-list-section .section-bottom::-webkit-scrollbar{
-    display: none;
-  }
+  
 
   .timer-section {
     flex: 1;
